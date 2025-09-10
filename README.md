@@ -50,7 +50,11 @@ SkillHub is a full-stack web app for managing skill-based courses. It provides r
 
 ## 📌 Project Status
 
-🔹 Currently the **frontend** (React + CSS) is implemented.
-🔹 Backend (Node.js, Express, MongoDB) will be added in the next phase.
+ 🔹 Currently the **frontend** (React + CSS) is implemented.  
+ 🔹 Backend (Node.js, Express, MongoDB) will be added in the next phase.  
+
+
+
+
 
 
