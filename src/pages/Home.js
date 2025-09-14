@@ -46,10 +46,6 @@ const Home = () => {
           </div>
         </div>
         <div className="hero-content">
-          <div className="hero-badge">
-            <span className="badge-icon">✨</span>
-            <span>Trusted by 10,000+ learners worldwide</span>
-          </div>
           <h1 className="hero-title">
             Master New Skills with
                     <span className="gradient-text"> SkillHub</span>
