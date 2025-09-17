@@ -305,6 +305,7 @@ const StudentDashboard = () => {
                   Enrolled: {new Date(course.enrolledAt).toLocaleDateString()}
                 </p>
                 <button 
+                  type="button"
                   onClick={() => unenrollFromCourse(course.id)}
                   className="unenroll-btn"
                 >
@@ -423,6 +424,7 @@ const StudentDashboard = () => {
               
               <div className="course-actions">
                 <button
+                  type="button"
                   onClick={() => registerForCourse(course)}
                   disabled={isEnrolled(course.id) || course.enrolled >= course.maxStudents}
                   className={`register-btn ${
@@ -446,6 +448,7 @@ const StudentDashboard = () => {
         {totalPages > 1 && (
           <div className="pagination">
             <button
+              type="button"
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
               className="pagination-btn"
@@ -457,6 +460,7 @@ const StudentDashboard = () => {
               {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
                 <button
                   key={page}
+                  type="button"
                   onClick={() => setCurrentPage(page)}
                   className={`pagination-number ${currentPage === page ? 'active' : ''}`}
                 >
@@ -466,6 +470,7 @@ const StudentDashboard = () => {
             </div>
             
             <button
+              type="button"
               onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
               className="pagination-btn"

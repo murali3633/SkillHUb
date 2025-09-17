@@ -38,7 +38,7 @@ const Navbar = () => {
                 Dashboard
               </Link>
               
-              <button onClick={handleLogout} className="logout-btn">
+              <button type="button" onClick={handleLogout} className="logout-btn">
                 Logout
               </button>
             </>

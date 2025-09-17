@@ -21,7 +21,7 @@ function App() {
           <Router>
             <div className="App">
               <Navbar />
-              <main style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
+              <main>
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/login" element={<Login />} />

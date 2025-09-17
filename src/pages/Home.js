@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { setupFullWidthListener } from '../utils/fullWidthHelper';
 
 const Home = () => {
   const { isAuthenticated, user } = useAuth();
@@ -31,21 +32,29 @@ const Home = () => {
     const interval = setInterval(() => {
       setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
     }, 5000);
-    return () => clearInterval(interval);
+    
+    // Setup full-width enforcement
+    const cleanup = setupFullWidthListener();
+    
+    return () => {
+      clearInterval(interval);
+      cleanup();
+    };
   }, [testimonials.length]);
 
   return (
     <div className="home-container">
       {/* Hero Section */}
       <section className="hero-section">
-        <div className="hero-background">
-          <div className="hero-shapes">
-            <div className="shape shape-1"></div>
-            <div className="shape shape-2"></div>
-            <div className="shape shape-3"></div>
+        <div className="hero-background" aria-hidden="true">
+          <div className="hero-shapes" aria-hidden="true">
+            <div className="shape shape-1" aria-hidden="true"></div>
+            <div className="shape shape-2" aria-hidden="true"></div>
+            <div className="shape shape-3" aria-hidden="true"></div>
           </div>
         </div>
         <div className="hero-content">
+          
           <h1 className="hero-title">
             Master New Skills with
                     <span className="gradient-text"> SkillHub</span>
@@ -54,20 +63,20 @@ const Home = () => {
             Join thousands of learners in our comprehensive skill development platform. 
             From programming to design, marketing to management - unlock your potential today.
           </p>
-          <div className="hero-buttons">
+          <div className="hero-buttons" role="group" aria-label="Primary actions">
             {!isAuthenticated() ? (
               <>
-                <Link to="/register" className="btn btn-primary btn-large">
+                <Link to="/register" className="btn btn-primary btn-large" aria-label="Get started for free by creating an account">
                   <span className="btn-icon">🚀</span>
                   Get Started Free
                 </Link>
-                <Link to="/login" className="btn btn-secondary btn-large">
+                <Link to="/login" className="btn btn-secondary btn-large" aria-label="Sign in to your account">
                   <span className="btn-icon">🔑</span>
                   Sign In
                 </Link>
               </>
             ) : (
-              <Link to={user?.role === 'student' ? '/student-dashboard' : '/faculty-dashboard'} className="btn btn-primary btn-large">
+              <Link to={user?.role === 'student' ? '/student-dashboard' : '/faculty-dashboard'} className="btn btn-primary btn-large" aria-label="Go to your dashboard">
                 <span className="btn-icon">📊</span>
                 Go to Dashboard
               </Link>
@@ -88,7 +97,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="hero-image">
+        <div className="hero-image" aria-hidden="true">
           <div className="floating-cards">
             <div className="card card-1">
               <div className="card-icon">📚</div>
@@ -114,13 +123,15 @@ const Home = () => {
         </div>
       </section>
 
+     
+
       {/* Features Section */}
       <section className="features-section">
-        <div className="container">
-          <div className="section-header">
-            <h2 className="section-title">Why Choose SkillHub?</h2>
-            <p className="section-subtitle">Everything you need to succeed in your learning journey</p>
-          </div>
+        <div className="section-header">
+          <h2 className="section-title">Why Choose SkillHub?</h2>
+          <p className="section-subtitle">Everything you need to succeed in your learning journey</p>
+        </div>
+        <div className="features-container">
           <div className="features-grid">
             <div className="feature-card">
               <div className="feature-icon-wrapper">
@@ -176,32 +187,60 @@ const Home = () => {
 
       {/* Testimonials Section */}
       <section className="testimonials-section">
-        <div className="container">
-          <div className="section-header">
-            <h2 className="section-title">What Our Students Say</h2>
-            <p className="section-subtitle">Real stories from real learners</p>
-          </div>
-          <div className="testimonials-container">
-            <div className="testimonial-card active">
-              <div className="testimonial-content">
-                <div className="testimonial-avatar">{testimonials[currentTestimonial].avatar}</div>
-                <blockquote className="testimonial-quote">
-                  "{testimonials[currentTestimonial].content}"
-                </blockquote>
-                <div className="testimonial-author">
-                  <div className="author-name">{testimonials[currentTestimonial].name}</div>
-                  <div className="author-role">{testimonials[currentTestimonial].role}</div>
-                </div>
+        <div className="section-header">
+          <h2 className="section-title">What Our Students Say</h2>
+          <p className="section-subtitle">Real stories from real learners</p>
+        </div>
+        <div className="testimonials-container">
+          <div className="testimonial-card active">
+            <div className="testimonial-content">
+              <div className="testimonial-avatar">{testimonials[currentTestimonial].avatar}</div>
+              <blockquote className="testimonial-quote">
+                "{testimonials[currentTestimonial].content}"
+              </blockquote>
+              <div className="testimonial-author">
+                <div className="author-name">{testimonials[currentTestimonial].name}</div>
+                <div className="author-role">{testimonials[currentTestimonial].role}</div>
               </div>
             </div>
-            <div className="testimonial-indicators">
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  className={`indicator ${index === currentTestimonial ? 'active' : ''}`}
-                  onClick={() => setCurrentTestimonial(index)}
-                />
-              ))}
+          </div>
+          <div className="testimonial-indicators">
+            {testimonials.map((_, index) => (
+              <button
+                type="button"
+                key={index}
+                className={`indicator ${index === currentTestimonial ? 'active' : ''}`}
+                onClick={() => setCurrentTestimonial(index)}
+                aria-label={`Show testimonial ${index + 1}`}
+                aria-pressed={index === currentTestimonial}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="how-section" aria-label="How SkillHub works">
+        <div className="section-header">
+          <h2 className="section-title">How It Works</h2>
+          <p className="section-subtitle">Three simple steps to start learning</p>
+        </div>
+        <div className="how-container">
+          <div className="how-grid">
+            <div className="how-card">
+              <div className="how-icon">📝</div>
+              <h3>Create Your Account</h3>
+              <p>Sign up in seconds and personalize your learning goals.</p>
+            </div>
+            <div className="how-card">
+              <div className="how-icon">🧭</div>
+              <h3>Choose a Path</h3>
+              <p>Pick curated tracks or individual courses that fit your needs.</p>
+            </div>
+            <div className="how-card">
+              <div className="how-icon">🌟</div>
+              <h3>Learn by Doing</h3>
+              <p>Build real projects and showcase certificates on your profile.</p>
             </div>
           </div>
         </div>
@@ -209,7 +248,7 @@ const Home = () => {
 
       {/* Stats Section */}
       <section className="stats-section">
-        <div className="container">
+        <div className="stats-container">
           <div className="stats-grid">
             <div className="stat-item">
               <div className="stat-number">10,000+</div>
@@ -233,12 +272,12 @@ const Home = () => {
 
       {/* CTA Section */}
       <section className="cta-section">
-        <div className="container">
+        <div className="cta-container">
           <div className="cta-content">
             <h2>Ready to Start Your Learning Journey?</h2>
             <p>Join our community of learners and start building the skills you need for tomorrow.</p>
             {!isAuthenticated() && (
-              <Link to="/register" className="btn btn-primary btn-large">
+              <Link to="/register" className="btn btn-primary btn-large" aria-label="Create your free SkillHub account">
                 Start Learning Today
               </Link>
             )}

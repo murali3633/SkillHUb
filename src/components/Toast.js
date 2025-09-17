@@ -90,6 +90,7 @@ const Toast = ({ message, type = 'info', duration = 5000, onClose }) => {
       <span style={{ fontSize: '1.2rem' }}>{getIcon()}</span>
       <span style={{ flex: 1 }}>{message}</span>
       <button
+        type="button"
         onClick={(e) => {
           e.stopPropagation();
           handleClose();

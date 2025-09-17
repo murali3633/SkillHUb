@@ -31,7 +31,7 @@ const Unauthorized = () => {
                 Go to My Dashboard
               </Link>
               
-              <button onClick={logout} className="btn btn-danger">
+              <button type="button" onClick={logout} className="btn btn-danger">
                 Logout
               </button>
             </>
