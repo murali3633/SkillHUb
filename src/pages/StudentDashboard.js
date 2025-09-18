@@ -126,6 +126,146 @@ const StudentDashboard = () => {
       enrolled: 25,
       startDate: '2024-04-10',
       endDate: '2024-06-05'
+    },
+    {
+      id: 9,
+      title: 'Cloud Computing Fundamentals',
+      code: 'CC901',
+      category: 'Technology',
+      description: 'Introduction to cloud platforms including AWS, Azure, and GCP.',
+      instructor: 'Dr. Kumar',
+      duration: '10 weeks',
+      level: 'Intermediate',
+      maxStudents: 28,
+      enrolled: 12,
+      startDate: '2024-04-15',
+      endDate: '2024-06-24'
+    },
+    {
+      id: 10,
+      title: 'Cybersecurity Essentials',
+      code: 'CS1001',
+      category: 'Security',
+      description: 'Learn fundamental cybersecurity concepts and threat protection.',
+      instructor: 'Prof. Anderson',
+      duration: '8 weeks',
+      level: 'Beginner',
+      maxStudents: 32,
+      enrolled: 29,
+      startDate: '2024-05-01',
+      endDate: '2024-06-26'
+    },
+    {
+      id: 11,
+      title: 'React & Node.js Development',
+      code: 'RN1101',
+      category: 'Programming',
+      description: 'Full-stack web development with React frontend and Node.js backend.',
+      instructor: 'Ms. Chen',
+      duration: '14 weeks',
+      level: 'Advanced',
+      maxStudents: 22,
+      enrolled: 8,
+      startDate: '2024-05-15',
+      endDate: '2024-08-23'
+    },
+    {
+      id: 12,
+      title: 'Data Visualization with Python',
+      code: 'DV1201',
+      category: 'Data Science',
+      description: 'Create compelling data visualizations using Python libraries.',
+      instructor: 'Dr. Martinez',
+      duration: '6 weeks',
+      level: 'Intermediate',
+      maxStudents: 26,
+      enrolled: 19,
+      startDate: '2024-05-20',
+      endDate: '2024-07-01'
+    },
+    {
+      id: 13,
+      title: 'Mobile App Development',
+      code: 'MA1301',
+      category: 'Programming',
+      description: 'Build native mobile applications for iOS and Android platforms.',
+      instructor: 'Prof. Williams',
+      duration: '12 weeks',
+      level: 'Advanced',
+      maxStudents: 20,
+      enrolled: 14,
+      startDate: '2024-06-01',
+      endDate: '2024-08-24'
+    },
+    {
+      id: 14,
+      title: 'Financial Analysis & Modeling',
+      code: 'FA1401',
+      category: 'Finance',
+      description: 'Master financial modeling techniques and investment analysis.',
+      instructor: 'Dr. Thompson',
+      duration: '9 weeks',
+      level: 'Intermediate',
+      maxStudents: 24,
+      enrolled: 21,
+      startDate: '2024-06-10',
+      endDate: '2024-08-12'
+    },
+    {
+      id: 15,
+      title: 'DevOps & CI/CD Pipeline',
+      code: 'DO1501',
+      category: 'Technology',
+      description: 'Learn DevOps practices, automation, and continuous deployment.',
+      instructor: 'Mr. Jackson',
+      duration: '8 weeks',
+      level: 'Advanced',
+      maxStudents: 18,
+      enrolled: 11,
+      startDate: '2024-06-15',
+      endDate: '2024-08-10'
+    },
+    {
+      id: 16,
+      title: 'Artificial Intelligence Fundamentals',
+      code: 'AI1601',
+      category: 'Data Science',
+      description: 'Introduction to AI concepts, neural networks, and deep learning.',
+      instructor: 'Dr. Patel',
+      duration: '11 weeks',
+      level: 'Advanced',
+      maxStudents: 16,
+      enrolled: 9,
+      startDate: '2024-07-01',
+      endDate: '2024-09-16'
+    },
+    {
+      id: 17,
+      title: 'Content Marketing Mastery',
+      code: 'CM1701',
+      category: 'Marketing',
+      description: 'Create engaging content strategies for digital marketing success.',
+      instructor: 'Ms. Rodriguez',
+      duration: '7 weeks',
+      level: 'Beginner',
+      maxStudents: 35,
+      enrolled: 31,
+      startDate: '2024-07-08',
+      endDate: '2024-08-26'
+    },
+    {
+      id: 18,
+      title: 'Blockchain Technology',
+      code: 'BT1801',
+      category: 'Technology',
+      description: 'Understand blockchain fundamentals and cryptocurrency development.',
+      instructor: 'Prof. Kim',
+      duration: '10 weeks',
+      level: 'Advanced',
+      maxStudents: 15,
+      enrolled: 7,
+      startDate: '2024-07-15',
+      endDate: '2024-09-23'
     }
   ], []);
 
@@ -258,7 +398,6 @@ const StudentDashboard = () => {
       <div className="dashboard-header">
         <div className="welcome-section">
           <h1 className="dashboard-title">
-            <span className="title-icon">🎓</span>
             Student Dashboard
           </h1>
           <p className="welcome-message">
@@ -368,21 +507,21 @@ const StudentDashboard = () => {
               <div className="course-header">
                 <div className="course-title-section">
                   <h3 className="course-title">{course.title}</h3>
-                  <span className="course-code">{course.code}</span>
-                </div>
-                <div className="course-status">
-                  {isEnrolled(course.id) && (
-                    <span className="status-badge enrolled">Enrolled</span>
-                  )}
-                  {course.enrolled >= course.maxStudents && !isEnrolled(course.id) && (
-                    <span className="status-badge full">Full</span>
-                  )}
+                  <div className="course-code-row">
+                    <span className="course-code">{course.code}</span>
+                  </div>
                 </div>
               </div>
               
               <div className="course-meta">
                 <span className="course-category">{course.category}</span>
                 <span className={`course-level level-${course.level.toLowerCase()}`}>{course.level}</span>
+                {isEnrolled(course.id) && (
+                  <span className="status-badge enrolled">Enrolled</span>
+                )}
+                {course.enrolled >= course.maxStudents && !isEnrolled(course.id) && (
+                  <span className="status-badge full">Full</span>
+                )}
               </div>
               
               <p className="course-description">{course.description}</p>

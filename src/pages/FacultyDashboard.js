@@ -109,9 +109,13 @@ const FacultyDashboard = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    
+    // Convert course code to uppercase
+    const processedValue = name === 'code' ? value.toUpperCase() : value;
+    
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: processedValue
     }));
     
     // Clear error when user starts typing
@@ -132,8 +136,8 @@ const FacultyDashboard = () => {
 
     if (!formData.code.trim()) {
       errors.code = 'Code is required';
-    } else if (!/^[A-Z]{2,4}\d{3}$/.test(formData.code)) {
-      errors.code = 'Code must be in format like WEB101, DSA201, etc.';
+    } else if (formData.code.trim().length < 3) {
+      errors.code = 'Course code must be at least 3 characters';
     }
 
     if (!formData.category) {
@@ -231,6 +235,13 @@ const FacultyDashboard = () => {
     alert('Course restored successfully!');
   };
 
+  const handlePermanentDelete = (courseId) => {
+    if (window.confirm('Are you sure you want to permanently delete this course? This action cannot be undone and all course data will be lost forever.')) {
+      setCourses(prev => prev.filter(course => course.id !== courseId));
+      alert('Course permanently deleted!');
+    }
+  };
+
   const activeCourses = courses.filter(course => course.isActive);
   const deletedCourses = courses.filter(course => !course.isActive);
 
@@ -290,7 +301,7 @@ const FacultyDashboard = () => {
                     value={formData.code}
                     onChange={handleInputChange}
                     className={formErrors.code ? 'error' : ''}
-                    placeholder="e.g., WEB101"
+                    placeholder="e.g., WEB101, CUTM1021, CS101"
                   />
                   {formErrors.code && <span className="error-message">{formErrors.code}</span>}
                 </div>
@@ -465,12 +476,20 @@ const FacultyDashboard = () => {
                   <h4>{course.title} ({course.code})</h4>
                   <p>Deleted on {new Date(course.updatedAt).toLocaleDateString()}</p>
                 </div>
-                <button 
-                  onClick={() => handleRestore(course.id)}
-                  className="restore-btn"
-                >
-                  Restore
-                </button>
+                <div className="deleted-course-actions">
+                  <button 
+                    onClick={() => handleRestore(course.id)}
+                    className="restore-btn"
+                  >
+                    Restore
+                  </button>
+                  <button 
+                    onClick={() => handlePermanentDelete(course.id)}
+                    className="permanent-delete-btn"
+                  >
+                    Delete Permanently
+                  </button>
+                </div>
               </div>
             ))}
           </div>
