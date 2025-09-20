@@ -1,7 +1,7 @@
 
 # SkillHub – Skill Course Management System  
 
-SkillHub is a full-stack web app for managing skill-based courses. It provides role-based access for **students and faculty**, allowing course creation, enrollment, and management. Built with the **MERN stack (MongoDB, Express, React, Node.js)** and designed to be fully responsive.   
+SkillHub is a full-stack web app for managing skill-based courses. It provides role-based access for **students and faculty**, allowing course creation, enrollment, and management. Built with the **MERN stack (MongoDB, Express, React, Node.js)** and designed to be fully responsive.
 
 ---
 
