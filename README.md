@@ -5,7 +5,7 @@ SkillHub is a full-stack web app for managing skill-based courses. It provides r
 
 ---
 
-## 🚀 Features  
+## 🚀 Features 
 - Role-based access: Student and Faculty
 - Course creation, enrollment, and management  
 - User authentication (Login & Register)  
