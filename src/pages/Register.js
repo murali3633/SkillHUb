@@ -126,7 +126,7 @@ const Register = () => {
       if (result && result.user) {
         switch (result.user.role) {
           case 'student':
-            navigate('/student-dashboard');
+            navigate('/available-courses');
             break;
           case 'faculty':
             navigate('/faculty-dashboard');

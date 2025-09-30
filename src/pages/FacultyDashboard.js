@@ -16,7 +16,8 @@ const FacultyDashboard = () => {
     description: '',
     capacity: '',
     duration: '',
-    level: 'Beginner'
+    level: 'Beginner',
+    syllabus: [{ week: 1, topic: '', tutorials: [''], youtubeLinks: [''] }]
   });
   const [formErrors, setFormErrors] = useState({});
 
@@ -60,7 +61,27 @@ const FacultyDashboard = () => {
           instructor: user?.name || 'Dr. Smith',
           isActive: true,
           createdAt: '2024-01-01',
-          updatedAt: '2024-01-01'
+          updatedAt: '2024-01-01',
+          syllabus: [
+            { 
+              week: 1, 
+              topic: 'Introduction to Web Development', 
+              tutorials: ['HTML Basics', 'Setting up Development Environment'],
+              youtubeLinks: ['https://www.youtube.com/watch?v=UB1O30fR-EE']
+            },
+            { 
+              week: 2, 
+              topic: 'HTML Fundamentals', 
+              tutorials: ['HTML Structure', 'Forms and Inputs'],
+              youtubeLinks: ['https://www.youtube.com/watch?v=88PXJAA6szs']
+            },
+            { 
+              week: 3, 
+              topic: 'CSS Styling', 
+              tutorials: ['CSS Selectors', 'Layout Techniques'],
+              youtubeLinks: ['https://www.youtube.com/watch?v=yfoY53QXEnI']
+            }
+          ]
         },
         {
           id: 2,
@@ -75,7 +96,21 @@ const FacultyDashboard = () => {
           instructor: user?.name || 'Dr. Smith',
           isActive: true,
           createdAt: '2024-01-05',
-          updatedAt: '2024-01-05'
+          updatedAt: '2024-01-05',
+          syllabus: [
+            { 
+              week: 1, 
+              topic: 'Introduction to DSA', 
+              tutorials: ['Complexity Analysis', 'Big O Notation'],
+              youtubeLinks: ['https://www.youtube.com/watch?v=zg9ihh5C1XE']
+            },
+            { 
+              week: 2, 
+              topic: 'Arrays and Strings', 
+              tutorials: ['Array Operations', 'String Manipulation'],
+              youtubeLinks: ['https://www.youtube.com/watch?v=5OEoYPm1_cs']
+            }
+          ]
         },
         {
           id: 3,
@@ -90,7 +125,21 @@ const FacultyDashboard = () => {
           instructor: user?.name || 'Dr. Smith',
           isActive: true,
           createdAt: '2024-01-10',
-          updatedAt: '2024-01-10'
+          updatedAt: '2024-01-10',
+          syllabus: [
+            { 
+              week: 1, 
+              topic: 'Introduction to Digital Marketing', 
+              tutorials: ['Marketing Fundamentals', 'Digital vs Traditional'],
+              youtubeLinks: ['https://www.youtube.com/watch?v=R9rJK8Q4kZ0']
+            },
+            { 
+              week: 2, 
+              topic: 'SEO and Content Marketing', 
+              tutorials: ['Keyword Research', 'Content Strategy'],
+              youtubeLinks: ['https://www.youtube.com/watch?v=87H5DwX9X-Q']
+            }
+          ]
         }
       ];
       setCourses(defaultCourses);
@@ -102,6 +151,8 @@ const FacultyDashboard = () => {
   useEffect(() => {
     if (user?.id && courses.length > 0) {
       localStorage.setItem(`facultyCourses_${user.id}`, JSON.stringify(courses));
+      // Also save to global courses for student access
+      localStorage.setItem('allCourses', JSON.stringify(courses));
     }
   }, [courses, user?.id]);
 
@@ -125,6 +176,102 @@ const FacultyDashboard = () => {
         [name]: ''
       }));
     }
+  };
+
+  // Handle syllabus changes
+  const handleSyllabusChange = (index, field, value, subIndex = null, subField = null) => {
+    setFormData(prev => {
+      const newSyllabus = [...prev.syllabus];
+      
+      if (subField) {
+        // Handle nested array changes (tutorials or youtubeLinks)
+        newSyllabus[index][subField][subIndex] = value;
+      } else if (subIndex !== null) {
+        // Handle array changes (tutorials)
+        newSyllabus[index][field][subIndex] = value;
+      } else {
+        // Handle direct field changes
+        newSyllabus[index][field] = value;
+      }
+      
+      return {
+        ...prev,
+        syllabus: newSyllabus
+      };
+    });
+  };
+
+  // Add a new week to syllabus
+  const addWeek = () => {
+    setFormData(prev => ({
+      ...prev,
+      syllabus: [
+        ...prev.syllabus,
+        { week: prev.syllabus.length + 1, topic: '', tutorials: [''], youtubeLinks: [''] }
+      ]
+    }));
+  };
+
+  // Remove a week from syllabus
+  const removeWeek = (index) => {
+    if (formData.syllabus.length > 1) {
+      setFormData(prev => ({
+        ...prev,
+        syllabus: prev.syllabus.filter((_, i) => i !== index)
+      }));
+    }
+  };
+
+  // Add a tutorial to a week
+  const addTutorial = (weekIndex) => {
+    setFormData(prev => {
+      const newSyllabus = [...prev.syllabus];
+      newSyllabus[weekIndex].tutorials.push('');
+      return {
+        ...prev,
+        syllabus: newSyllabus
+      };
+    });
+  };
+
+  // Remove a tutorial from a week
+  const removeTutorial = (weekIndex, tutorialIndex) => {
+    setFormData(prev => {
+      const newSyllabus = [...prev.syllabus];
+      if (newSyllabus[weekIndex].tutorials.length > 1) {
+        newSyllabus[weekIndex].tutorials.splice(tutorialIndex, 1);
+      }
+      return {
+        ...prev,
+        syllabus: newSyllabus
+      };
+    });
+  };
+
+  // Add a YouTube link to a week
+  const addYoutubeLink = (weekIndex) => {
+    setFormData(prev => {
+      const newSyllabus = [...prev.syllabus];
+      newSyllabus[weekIndex].youtubeLinks.push('');
+      return {
+        ...prev,
+        syllabus: newSyllabus
+      };
+    });
+  };
+
+  // Remove a YouTube link from a week
+  const removeYoutubeLink = (weekIndex, linkIndex) => {
+    setFormData(prev => {
+      const newSyllabus = [...prev.syllabus];
+      if (newSyllabus[weekIndex].youtubeLinks.length > 1) {
+        newSyllabus[weekIndex].youtubeLinks.splice(linkIndex, 1);
+      }
+      return {
+        ...prev,
+        syllabus: newSyllabus
+      };
+    });
   };
 
   const validateForm = () => {
@@ -167,8 +314,16 @@ const FacultyDashboard = () => {
       return;
     }
 
+    // Filter out empty tutorials and youtube links
+    const cleanedSyllabus = formData.syllabus.map(week => ({
+      ...week,
+      tutorials: week.tutorials.filter(tutorial => tutorial.trim() !== ''),
+      youtubeLinks: week.youtubeLinks.filter(link => link.trim() !== '')
+    })).filter(week => week.topic.trim() !== '');
+
     const courseData = {
       ...formData,
+      syllabus: cleanedSyllabus,
       id: editingCourse ? editingCourse.id : Date.now(),
       enrolled: editingCourse ? editingCourse.enrolled : 0,
       instructor: user?.name || 'Dr. Smith',
@@ -198,7 +353,8 @@ const FacultyDashboard = () => {
       description: '',
       capacity: '',
       duration: '',
-      level: 'Beginner'
+      level: 'Beginner',
+      syllabus: [{ week: 1, topic: '', tutorials: [''], youtubeLinks: [''] }]
     });
     setFormErrors({});
     setShowAddForm(false);
@@ -214,7 +370,10 @@ const FacultyDashboard = () => {
       description: course.description,
       capacity: course.capacity.toString(),
       duration: course.duration,
-      level: course.level
+      level: course.level,
+      syllabus: course.syllabus && course.syllabus.length > 0 
+        ? course.syllabus 
+        : [{ week: 1, topic: '', tutorials: [''], youtubeLinks: [''] }]
     });
     setShowAddForm(true);
   };
@@ -385,6 +544,104 @@ const FacultyDashboard = () => {
                 {formErrors.description && <span className="error-message">{formErrors.description}</span>}
               </div>
 
+              {/* Syllabus Section */}
+              <div className="form-group">
+                <label>Syllabus</label>
+                <div className="syllabus-builder">
+                  {formData.syllabus.map((week, weekIndex) => (
+                    <div key={weekIndex} className="week-builder">
+                      <div className="week-header">
+                        <h4>Week {weekIndex + 1}</h4>
+                        {formData.syllabus.length > 1 && (
+                          <button 
+                            type="button" 
+                            onClick={() => removeWeek(weekIndex)}
+                            className="remove-week-btn"
+                          >
+                            Remove Week
+                          </button>
+                        )}
+                      </div>
+                      
+                      <div className="form-row">
+                        <div className="form-group">
+                          <label>Topic *</label>
+                          <input
+                            type="text"
+                            value={week.topic}
+                            onChange={(e) => handleSyllabusChange(weekIndex, 'topic', e.target.value)}
+                            placeholder="Week topic"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div className="form-group">
+                        <label>Tutorials</label>
+                        {week.tutorials.map((tutorial, tutIndex) => (
+                          <div key={tutIndex} className="tutorial-input-row">
+                            <input
+                              type="text"
+                              value={tutorial}
+                              onChange={(e) => handleSyllabusChange(weekIndex, 'tutorials', e.target.value, tutIndex)}
+                              placeholder="Tutorial name"
+                            />
+                            {week.tutorials.length > 1 && (
+                              <button 
+                                type="button" 
+                                onClick={() => removeTutorial(weekIndex, tutIndex)}
+                                className="remove-tutorial-btn"
+                              >
+                                Remove
+                              </button>
+                            )}
+                          </div>
+                        ))}
+                        <button 
+                          type="button" 
+                          onClick={() => addTutorial(weekIndex)}
+                          className="add-tutorial-btn"
+                        >
+                          + Add Tutorial
+                        </button>
+                      </div>
+                      
+                      <div className="form-group">
+                        <label>YouTube Tutorial Links</label>
+                        {week.youtubeLinks.map((link, linkIndex) => (
+                          <div key={linkIndex} className="link-input-row">
+                            <input
+                              type="text"
+                              value={link}
+                              onChange={(e) => handleSyllabusChange(weekIndex, 'youtubeLinks', e.target.value, linkIndex)}
+                              placeholder="https://youtube.com/watch?v=..."
+                            />
+                            {week.youtubeLinks.length > 1 && (
+                              <button 
+                                type="button" 
+                                onClick={() => removeYoutubeLink(weekIndex, linkIndex)}
+                                className="remove-link-btn"
+                              >
+                                Remove
+                              </button>
+                            )}
+                          </div>
+                        ))}
+                        <button 
+                          type="button" 
+                          onClick={() => addYoutubeLink(weekIndex)}
+                          className="add-link-btn"
+                        >
+                          + Add YouTube Link
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                  <button type="button" onClick={addWeek} className="add-week-btn">
+                    + Add Another Week
+                  </button>
+                </div>
+              </div>
+
               <div className="form-actions">
                 <button type="submit" className="submit-btn">
                   {editingCourse ? 'Update Course' : 'Create Course'}
@@ -442,7 +699,7 @@ const FacultyDashboard = () => {
                     onClick={() => setShowEnrollments(course.id)}
                     className="view-students-btn"
                   >
-                    View Students ({course.enrolled})
+                    View Students 
                   </button>
                   <button 
                     onClick={() => handleEdit(course)}

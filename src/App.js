@@ -9,7 +9,9 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import StudentDashboard from './pages/StudentDashboard';
+import EnrolledCourses from './pages/EnrolledCourses';
 import FacultyDashboard from './pages/FacultyDashboard';
+import SyllabusDetail from './components/SyllabusDetail';
 import Unauthorized from './pages/Unauthorized';
 import './App.css';
 
@@ -33,6 +35,14 @@ function App() {
                     path="/student-dashboard" 
                     element={
                       <PrivateRoute requiredRole="student">
+                        <EnrolledCourses />
+                      </PrivateRoute>
+                    } 
+                  />
+                  <Route 
+                    path="/available-courses" 
+                    element={
+                      <PrivateRoute requiredRole="student">
                         <StudentDashboard />
                       </PrivateRoute>
                     } 
@@ -42,6 +52,14 @@ function App() {
                     element={
                       <PrivateRoute requiredRole="faculty">
                         <FacultyDashboard />
+                      </PrivateRoute>
+                    } 
+                  />
+                  <Route 
+                    path="/syllabus-detail" 
+                    element={
+                      <PrivateRoute requiredRole="student">
+                        <SyllabusDetail />
                       </PrivateRoute>
                     } 
                   />

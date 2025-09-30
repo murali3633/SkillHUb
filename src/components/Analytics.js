@@ -97,6 +97,11 @@ const Analytics = ({ courses }) => {
       {
         label: 'Enrollments',
         data: enrollmentStats.map(stat => stat.totalEnrollments),
+        barThickness: 20,
+        maxBarThickness: 22,
+        categoryPercentage: 0.5,
+        barPercentage: 0.6,
+        borderRadius: 6,
         backgroundColor: [
           'rgba(102, 126, 234, 0.8)',
           'rgba(40, 167, 69, 0.8)',
@@ -154,22 +159,61 @@ const Analytics = ({ courses }) => {
 
   const chartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top',
+        labels: {
+          color: '#111827',
+          font: {
+            size: 12,
+            weight: '500'
+          }
+        }
       },
       title: {
         display: true,
         text: 'Course Enrollment Analytics',
+        color: '#111827',
+        font: {
+          size: 16,
+          weight: '600'
+        }
       },
     },
     scales: {
       y: {
         beginAtZero: true,
+        max: Math.max(10, Math.max(...enrollmentStats.map(stat => stat.totalEnrollments)) + 2),
         ticks: {
           stepSize: 1,
+          color: '#111827',
+          font: {
+            size: 11
+          }
         },
+        grid: {
+          color: 'rgba(0, 0, 0, 0.05)',
+          drawBorder: false
+        },
+        border: {
+          display: false
+        }
       },
+      x: {
+        ticks: {
+          color: '#111827',
+          font: {
+            size: 11
+          }
+        },
+        grid: {
+          display: false
+        },
+        border: {
+          display: false
+        }
+      }
     },
   };
 
@@ -178,10 +222,14 @@ const Analytics = ({ courses }) => {
     plugins: {
       legend: {
         position: 'bottom',
+        labels: {
+          color: '#111827'
+        }
       },
       title: {
         display: true,
         text: 'Most Popular Courses',
+        color: '#111827'
       },
     },
   };
@@ -226,21 +274,38 @@ const Analytics = ({ courses }) => {
     : 0;
 
   return (
-    <div className="analytics-container">
-      <div className="analytics-header">
-        <h2>Course Analytics</h2>
-        <p>Track enrollment trends and course performance</p>
+    <div
+      className="analytics-container"
+      style={{
+        background: '#ffffff',
+        color: '#111827',
+        marginLeft: 'calc(50% - 50vw)',
+        marginRight: 'calc(50% - 50vw)',
+        padding: '24px 24px',
+        width: '100vw'
+      }}
+    >
+      <div className="analytics-header" style={{ marginBottom: 16 }}>
+        <h2 style={{ margin: 0, color: '#0f172a' }}>Course Analytics</h2>
+        <p style={{ marginTop: 6, color: 'rgba(17,24,39,0.7)' }}>Track enrollment trends and course performance</p>
       </div>
 
       {/* Controls */}
-      <div className="analytics-controls">
+      <div className="analytics-controls" style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
         <div className="filter-controls">
-          <label htmlFor="timeFilter">Time Period:</label>
+          <label htmlFor="timeFilter" style={{ marginRight: 8 }}>Time Period:</label>
           <select
             id="timeFilter"
             value={timeFilter}
             onChange={(e) => setTimeFilter(e.target.value)}
             className="filter-select"
+            style={{
+              background: '#ffffff',
+              color: '#111827',
+              border: '1px solid rgba(0,0,0,0.12)',
+              borderRadius: 8,
+              padding: '8px 10px'
+            }}
           >
             <option value="all">All Time</option>
             <option value="week">Last Week</option>
@@ -250,45 +315,107 @@ const Analytics = ({ courses }) => {
         </div>
 
         <div className="chart-controls">
-          <label htmlFor="chartType">Chart Type:</label>
+          <label htmlFor="chartType" style={{ marginRight: 8 }}>Chart Type:</label>
           <select
             id="chartType"
             value={selectedChart}
             onChange={(e) => setSelectedChart(e.target.value)}
             className="filter-select"
+            style={{
+              background: '#ffffff',
+              color: '#111827',
+              border: '1px solid rgba(0,0,0,0.12)',
+              borderRadius: 8,
+              padding: '8px 10px'
+            }}
           >
             <option value="enrollments">Enrollments per Course</option>
             <option value="popular">Most Popular Courses</option>
           </select>
         </div>
 
-        <button onClick={exportToCSV} className="export-btn">
+        <button
+          onClick={exportToCSV}
+          className="export-btn"
+          style={{
+            background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+            color: '#ffffff',
+            border: 'none',
+            borderRadius: 10,
+            padding: '10px 14px',
+            cursor: 'pointer',
+            boxShadow: '0 6px 16px rgba(124,58,237,0.25)'
+          }}
+        >
           📊 Export CSV
         </button>
       </div>
 
       {/* Summary Cards */}
-      <div className="summary-cards">
-        <div className="summary-card">
-          <h3>Total Enrollments</h3>
-          <p className="summary-number">{totalEnrollments}</p>
-          <p className="summary-label">across all courses</p>
+      <div className="summary-cards" style={{ display: 'grid', gap: 20, gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', marginTop: 16 }}>
+        <div style={{
+          background: 'linear-gradient(135deg, #93c5fd 0%, #c084fc 50%, #fda4af 100%)',
+          padding: 2,
+          borderRadius: 18
+        }}>
+          <div className="summary-card" style={{
+            background: '#ffffff',
+            border: '1px solid rgba(0,0,0,0.06)',
+            borderRadius: 16,
+            padding: 20,
+            boxShadow: '0 12px 24px rgba(15, 23, 42, 0.06)'
+          }}>
+            <h3 style={{ margin: 0, color: '#0f172a', opacity: 0.9 }}>Total Enrollments</h3>
+            <p className="summary-number" style={{ fontSize: 36, fontWeight: 800, margin: '10px 0 6px', color: '#0b1220' }}>{totalEnrollments}</p>
+            <p className="summary-label" style={{ color: '#6b7280', margin: 0 }}>across all courses</p>
+          </div>
         </div>
-        <div className="summary-card">
-          <h3>Active Courses</h3>
-          <p className="summary-number">{courses.length}</p>
-          <p className="summary-label">courses available</p>
+        <div style={{
+          background: 'linear-gradient(135deg, #a7f3d0 0%, #93c5fd 50%, #c4b5fd 100%)',
+          padding: 2,
+          borderRadius: 18
+        }}>
+          <div className="summary-card" style={{
+            background: '#ffffff',
+            border: '1px solid rgba(0,0,0,0.06)',
+            borderRadius: 16,
+            padding: 20,
+            boxShadow: '0 12px 24px rgba(15, 23, 42, 0.06)'
+          }}>
+            <h3 style={{ margin: 0, color: '#0f172a', opacity: 0.9 }}>Active Courses</h3>
+            <p className="summary-number" style={{ fontSize: 36, fontWeight: 800, margin: '10px 0 6px', color: '#0b1220' }}>{courses.length}</p>
+            <p className="summary-label" style={{ color: '#6b7280', margin: 0 }}>courses available</p>
+          </div>
         </div>
-        <div className="summary-card">
-          <h3>Avg. Enrollment Rate</h3>
-          <p className="summary-number">{averageEnrollmentRate.toFixed(1)}%</p>
-          <p className="summary-label">capacity utilization</p>
+        <div style={{
+          background: 'linear-gradient(135deg, #fde68a 0%, #fca5a5 50%, #c4b5fd 100%)',
+          padding: 2,
+          borderRadius: 18
+        }}>
+          <div className="summary-card" style={{
+            background: '#ffffff',
+            border: '1px solid rgba(0,0,0,0.06)',
+            borderRadius: 16,
+            padding: 20,
+            boxShadow: '0 12px 24px rgba(15, 23, 42, 0.06)'
+          }}>
+            <h3 style={{ margin: 0, color: '#0f172a', opacity: 0.9 }}>Avg. Enrollment Rate</h3>
+            <p className="summary-number" style={{ fontSize: 36, fontWeight: 800, margin: '10px 0 6px', color: '#0b1220' }}>{averageEnrollmentRate.toFixed(1)}%</p>
+            <p className="summary-label" style={{ color: '#6b7280', margin: 0 }}>capacity utilization</p>
+          </div>
         </div>
       </div>
 
       {/* Charts */}
-      <div className="charts-container">
-        <div className="chart-wrapper">
+      <div className="charts-container" style={{ marginTop: 16 }}>
+        <div className="chart-wrapper" style={{
+          background: '#ffffff',
+          border: '1px solid rgba(0,0,0,0.08)',
+          borderRadius: 16,
+          padding: 20,
+          height: 400,
+          boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
+        }}>
           {selectedChart === 'enrollments' ? (
             <Bar data={enrollmentChartData} options={chartOptions} />
           ) : (
@@ -298,43 +425,108 @@ const Analytics = ({ courses }) => {
       </div>
 
       {/* Detailed Table */}
-      <div className="analytics-table-section">
-        <h3>Detailed Course Statistics</h3>
-        <div className="table-container">
-          <table className="analytics-table">
+      <div className="analytics-table-section" style={{ marginTop: 20 }}>
+        <h3 style={{ margin: '0 0 12px', color: '#0f172a' }}>Detailed Course Statistics</h3>
+        <div className="table-container" style={{
+          background: '#ffffff',
+          border: '1px solid rgba(0,0,0,0.08)',
+          borderRadius: 16,
+          padding: 12,
+          overflowX: 'auto',
+          boxShadow: '0 8px 24px rgba(15,23,42,0.06)'
+        }}>
+          <table className="analytics-table" style={{ width: '100%', borderCollapse: 'collapse', color: '#111827' }}>
             <thead>
-              <tr>
-                <th>Course Code</th>
-                <th>Course Title</th>
-                <th>Category</th>
-                <th>Enrollments</th>
-                <th>Capacity</th>
-                <th>Enrollment Rate</th>
-                <th>Status</th>
+              <tr style={{ position: 'sticky', top: 0, background: '#f9fafb', zIndex: 1 }}>
+                <th style={{ textAlign: 'left', padding: 12, borderBottom: '1px solid rgba(0,0,0,0.08)', color: '#0f172a', fontWeight: 600 }}>Course Code</th>
+                <th style={{ textAlign: 'left', padding: 12, borderBottom: '1px solid rgba(0,0,0,0.08)', color: '#0f172a', fontWeight: 600 }}>Course Title</th>
+                <th style={{ textAlign: 'left', padding: 12, borderBottom: '1px solid rgba(0,0,0,0.08)', color: '#0f172a', fontWeight: 600 }}>Category</th>
+                <th style={{ textAlign: 'left', padding: 12, borderBottom: '1px solid rgba(0,0,0,0.08)', color: '#0f172a', fontWeight: 600 }}>Enrollments</th>
+                <th style={{ textAlign: 'left', padding: 12, borderBottom: '1px solid rgba(0,0,0,0.08)', color: '#0f172a', fontWeight: 600 }}>Capacity</th>
+                <th style={{ textAlign: 'left', padding: 12, borderBottom: '1px solid rgba(0,0,0,0.08)', color: '#0f172a', fontWeight: 600 }}>Enrollment Rate</th>
+                <th style={{ textAlign: 'left', padding: 12, borderBottom: '1px solid rgba(0,0,0,0.08)', color: '#0f172a', fontWeight: 600 }}>Status</th>
               </tr>
             </thead>
             <tbody>
-              {enrollmentStats.map(stat => (
-                <tr key={stat.id}>
-                  <td className="course-code">{stat.code}</td>
-                  <td className="course-title">{stat.title}</td>
-                  <td className="course-category">{stat.category}</td>
-                  <td className="enrollments">{stat.totalEnrollments}</td>
-                  <td className="capacity">{stat.capacity}</td>
-                  <td className="enrollment-rate">
-                    <div className="rate-bar">
-                      <div 
-                        className="rate-fill" 
-                        style={{ width: `${Math.min(stat.enrollmentRate, 100)}%` }}
-                      ></div>
-                      <span className="rate-text">{stat.enrollmentRate.toFixed(1)}%</span>
+              {enrollmentStats.map((stat, rowIndex) => (
+                <tr key={stat.id} style={{ borderBottom: '1px solid rgba(0,0,0,0.05)', background: rowIndex % 2 === 0 ? '#ffffff' : '#fbfbfb' }}>
+                  <td className="course-code" style={{ padding: 12 }}>
+                    <span style={{
+                      display: 'inline-block',
+                      padding: '6px 10px',
+                      borderRadius: 999,
+                      background: 'linear-gradient(135deg, #818cf8, #a78bfa)',
+                      color: '#ffffff',
+                      fontWeight: 700,
+                      fontSize: 13,
+                      letterSpacing: 0.3
+                    }}>{stat.code}</span>
+                  </td>
+                  <td className="course-title" style={{ padding: 12, color: '#0b1220', fontWeight: 600, minWidth: 260 }}>{stat.title}</td>
+                  <td className="course-category" style={{ padding: 12, minWidth: 160 }}>
+                    <span style={{
+                      display: 'inline-block',
+                      padding: '6px 10px',
+                      borderRadius: 10,
+                      background: 'rgba(99,102,241,0.08)',
+                      color: '#4f46e5',
+                      fontWeight: 600,
+                      fontSize: 12,
+                      letterSpacing: 0.4,
+                      textTransform: 'uppercase'
+                    }}>{stat.category}</span>
+                  </td>
+                  <td className="enrollments" style={{ padding: 12, fontWeight: 600, color: '#111827', minWidth: 100 }}>{stat.totalEnrollments}</td>
+                  <td className="capacity" style={{ padding: 12, color: '#374151', minWidth: 100 }}>{stat.capacity}</td>
+                  <td className="enrollment-rate" style={{ padding: 12, minWidth: 220 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                      <div className="rate-bar" style={{
+                        background: 'rgba(0,0,0,0.06)',
+                        borderRadius: 999,
+                        position: 'relative',
+                        height: 12,
+                        overflow: 'hidden',
+                        flex: 1
+                      }}>
+                        <div 
+                          className="rate-fill"
+                          style={{
+                            width: `${Math.min(stat.enrollmentRate, 100)}%`,
+                            background: 'linear-gradient(90deg, #34d399, #22d3ee)',
+                            height: '100%'
+                          }}
+                        />
+                      </div>
+                      <span style={{ fontSize: 13, color: '#0f172a', fontWeight: 700 }}>
+                        {stat.enrollmentRate.toFixed(1)}%
+                      </span>
                     </div>
                   </td>
-                  <td className="status">
-                    <span className={`status-badge ${
-                      stat.enrollmentRate >= 80 ? 'high' : 
-                      stat.enrollmentRate >= 50 ? 'medium' : 'low'
-                    }`}>
+                  <td className="status" style={{ padding: 12, minWidth: 120 }}>
+                    <span
+                      className={`status-badge ${
+                        stat.enrollmentRate >= 80 ? 'high' : 
+                        stat.enrollmentRate >= 50 ? 'medium' : 'low'
+                      }`}
+                      style={{
+                        display: 'inline-block',
+                        padding: '6px 10px',
+                        borderRadius: 999,
+                        background: stat.enrollmentRate >= 80
+                          ? 'rgba(16,185,129,0.15)'
+                          : stat.enrollmentRate >= 50
+                          ? 'rgba(245,158,11,0.15)'
+                          : 'rgba(239,68,68,0.15)',
+                        color: stat.enrollmentRate >= 80
+                          ? '#34d399'
+                          : stat.enrollmentRate >= 50
+                          ? '#f59e0b'
+                          : '#ef4444',
+                        border: '1px solid rgba(0,0,0,0.06)',
+                        fontWeight: 700,
+                        letterSpacing: 0.4
+                      }}
+                    >
                       {stat.enrollmentRate >= 80 ? 'High' : 
                        stat.enrollmentRate >= 50 ? 'Medium' : 'Low'}
                     </span>

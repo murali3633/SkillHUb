@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { setupFullWidthListener } from '../utils/fullWidthHelper';
 
 const Home = () => {
   const { isAuthenticated, user } = useAuth();
+  const navigate = useNavigate();
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
   const testimonials = [
@@ -29,6 +30,11 @@ const Home = () => {
   ];
 
   useEffect(() => {
+    // Redirect authenticated students to available courses
+    if (isAuthenticated() && user?.role === 'student') {
+      navigate('/available-courses');
+    }
+    
     const interval = setInterval(() => {
       setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
     }, 5000);
@@ -40,7 +46,7 @@ const Home = () => {
       clearInterval(interval);
       cleanup();
     };
-  }, [testimonials.length]);
+  }, [isAuthenticated, user, navigate, testimonials.length]);
 
   return (
     <div className="home-container">
@@ -76,7 +82,7 @@ const Home = () => {
                 </Link>
               </>
             ) : (
-              <Link to={user?.role === 'student' ? '/student-dashboard' : '/faculty-dashboard'} className="btn btn-primary btn-large" aria-label="Go to your dashboard">
+              <Link to={user?.role === 'student' ? '/available-courses' : '/faculty-dashboard'} className="btn btn-primary btn-large" aria-label="Go to your dashboard">
                 <span className="btn-icon">📊</span>
                 Go to Dashboard
               </Link>
@@ -289,4 +295,3 @@ const Home = () => {
 };
 
 export default Home;
-

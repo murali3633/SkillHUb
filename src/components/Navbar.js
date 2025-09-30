@@ -14,13 +14,13 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <Link to="/" className="navbar-brand">
+        <Link to={isAuthenticated() && user?.role === 'student' ? '/available-courses' : '/'} className="navbar-brand">
           <span className="brand-icon">🎓</span>
           SkillHub
         </Link>
         
         <div className="navbar-menu">
-          <Link to="/" className="navbar-link">
+          <Link to={isAuthenticated() && user?.role === 'student' ? '/available-courses' : '/'} className="navbar-link">
             Home
           </Link>
           

@@ -5163,6 +5163,136 @@ li:hover {
   border: none;
   padding: 0.75rem 1rem;
   border-radius: 8px;
+}
+
+/* Syllabus Section Styles */
+.syllabus-section {
+  margin: 1rem 0;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 1rem;
+}
+
+.syllabus-toggle-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.syllabus-toggle-btn:hover {
+  background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-text {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toggle-icon {
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.syllabus-content {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(241, 245, 249, 0.5);
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.syllabus-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.syllabus-week-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.syllabus-week-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.week-header {
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.week-number {
+  display: inline-block;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.week-topic {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 0.5rem 0;
+}
+
+.tutorials-section {
+  margin-top: 0.5rem;
+}
+
+.tutorials-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+  margin: 0 0 0.5rem 0;
+}
+
+.tutorials-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tutorial-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+  font-size: 0.8rem;
+  color: #475569;
+}
+
+.tutorial-icon {
+  font-size: 0.9rem;
+}
+
+.tutorial-name {
+  flex: 1;
+}
+
+.delete-btn {
   font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -6725,4 +6855,283 @@ li:hover {
     color: #e2e8f0;
     border-color: #718096;
   }
+}
+
+/* Syllabus Detail Page */
+.syllabus-detail-page {
+  padding: 2rem;
+  background: #f8fafc;
+  min-height: calc(100vh - 56px);
+  width: 100vw !important;
+  max-width: none !important;
+  margin: 0 !important;
+  box-sizing: border-box;
+}
+
+.syllabus-detail-page > div {
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.syllabus-detail-page .syllabus-header {
+  max-width: 1200px;
+  margin: 0 auto 2rem auto !important;
+  box-sizing: border-box;
+}
+
+.syllabus-detail-page .syllabus-content {
+  max-width: 1200px;
+  margin: 0 auto !important;
+  box-sizing: border-box;
+}
+
+.syllabus-header {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.syllabus-header h1 {
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+}
+
+.course-code {
+  display: inline-block;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.25rem 1rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.course-description {
+  color: #64748b;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.back-btn {
+  background: #f1f5f9;
+  color: #475569;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+  background: #e2e8f0;
+  transform: translateY(-1px);
+}
+
+.syllabus-content h2 {
+  color: #1e293b;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+.syllabus-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  max-width: none;
+}
+
+.syllabus-week-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.syllabus-week-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.week-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.week-number {
+  display: inline-block;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.week-topic {
+  color: #1e293b;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.tutorials-section h4,
+.youtube-links h4 {
+  color: #475569;
+  font-size: 1rem;
+  margin: 1rem 0 0.75rem 0;
+  font-weight: 600;
+}
+
+.tutorials-list,
+.links-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tutorial-item,
+.link-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.tutorial-item:last-child,
+.link-item:last-child {
+  border-bottom: none;
+}
+
+.tutorial-icon,
+.youtube-link::before {
+  font-size: 1rem;
+}
+
+.tutorial-name,
+.youtube-link {
+  color: #475569;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  flex: 1;
+}
+
+.youtube-link {
+  color: #667eea;
+  font-weight: 600;
+}
+
+.youtube-link:hover {
+  color: #5a6fd8;
+  text-decoration: underline;
+}
+
+.no-syllabus {
+  text-align: center;
+  color: #94a3b8;
+  font-style: italic;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Faculty Dashboard - Syllabus Builder */
+.syllabus-builder {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.week-builder {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.week-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.week-header h4 {
+  margin: 0;
+  color: #1e293b;
+}
+
+.remove-week-btn,
+.remove-tutorial-btn,
+.remove-link-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.remove-week-btn:hover,
+.remove-tutorial-btn:hover,
+.remove-link-btn:hover {
+  background: #dc2626;
+}
+
+.tutorial-input-row,
+.link-input-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  align-items: center;
+}
+
+.tutorial-input-row input,
+.link-input-row input {
+  flex: 1;
+}
+
+.add-tutorial-btn,
+.add-link-btn,
+.add-week-btn {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.add-tutorial-btn:hover,
+.add-link-btn:hover,
+.add-week-btn:hover {
+  background: #059669;
 }
